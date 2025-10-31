@@ -21,7 +21,10 @@ private:
 
     // Connection state
     // TODO: Add a bool to track if we're connected
+    bool connected;
+
     // TODO: Add a bool to track if we're the server or client
+    bool isServer;
     
 public:
     // Constructor
@@ -35,29 +38,36 @@ public:
     // TODO: Create a function to start server (listen on a port)
     // Parameters: port number
     // Returns: bool (success/failure)
+    bool startServer(int port);
     
     // TODO: Create a function to accept incoming connection
     // Returns: bool (success/failure)
+    bool accpetConnection();
     
     // Client functions
     // TODO: Create a function to connect to server
     // Parameters: IP address (string), port number
     // Returns: bool (success/failure)
-    
+    bool connectToServer(string ip, int port);
+
     // Communication functions
     // TODO: Create a function to send a move (position number)
     // Parameters: int position
     // Returns: bool (success/failure)
+    bool sendBoardMove(int pos);
     
     // TODO: Create a function to receive a move
     // Parameters: reference to int (to store received position)
     // Returns: bool (success/failure)
+    bool recieveMove(int &receivedPos);
     
     // Utility functions
     // TODO: Create a function to check if connected
     // Returns: bool
-    
+    bool isConnected();
+
     // TODO: Create a function to close connection gracefully
+    void closeConnection();
 };
 
 #endif // NETWORKMANAGER_H
