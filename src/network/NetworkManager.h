@@ -42,7 +42,7 @@ public:
     
     // TODO: Create a function to accept incoming connection
     // Returns: bool (success/failure)
-    bool accpetConnection();
+    bool acepetConnection();
     
     // Client functions
     // TODO: Create a function to connect to server
