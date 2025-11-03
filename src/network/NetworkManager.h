@@ -9,21 +9,19 @@ using namespace std;
 class NetworkManager {
 private:
     // Socket file descriptors
-    // TODO: Add an int for the server socket (listening socket)
+    // Server socket (listening socket)
     int serverSocket;
 
-    // TODO: Add an int for the client socket (connection to opponent)
+    //Client socket (connection to opponent)
     int clientSocket;
 
-    // Server address structure (used for binding)
-    // TODO: Add a sockaddr_in struct to store server address info
+    // Store server address info
     sockaddr_in serverAddress;
 
-    // Connection state
-    // TODO: Add a bool to track if we're connected
+    // Track if we're connected
     bool connected;
 
-    // TODO: Add a bool to track if we're the server or client
+    //Track if we're the server or client
     bool isServer;
     
 public:
@@ -35,38 +33,28 @@ public:
     ~NetworkManager();
     
     // Server functions
-    // TODO: Create a function to start server (listen on a port)
-    // Parameters: port number
-    // Returns: bool (success/failure)
+    //Function to start server (listen on a port)
     bool startServer(int port);
     
-    // TODO: Create a function to accept incoming connection
-    // Returns: bool (success/failure)
+    // Function to accept incoming connection
     bool acepetConnection();
     
     // Client functions
-    // TODO: Create a function to connect to server
-    // Parameters: IP address (string), port number
-    // Returns: bool (success/failure)
+    //Function to connect to server
     bool connectToServer(string ip, int port);
 
     // Communication functions
-    // TODO: Create a function to send a move (position number)
-    // Parameters: int position
-    // Returns: bool (success/failure)
+    // Function to send a move (position number)
     bool sendBoardMove(int pos);
     
-    // TODO: Create a function to receive a move
-    // Parameters: reference to int (to store received position)
-    // Returns: bool (success/failure)
+    //Function to receive a move
     bool recieveMove(int &receivedPos);
     
     // Utility functions
-    // TODO: Create a function to check if connected
-    // Returns: bool
+    //Check if connected
     bool isConnected();
 
-    // TODO: Create a function to close connection gracefully
+    // Close connection gracefully do cleanup
     void closeConnection();
 };
 

@@ -119,16 +119,16 @@ bool NetworkManager::connectToServer(string ip, int port){
 
 
   // Communication functions 
-    bool NetworkManager:: sendBoardMove(int pos){
+bool NetworkManager:: sendBoardMove(int pos){
         //TODO
-    }
+}
     
     // TODO: Create a function to receive a move
     // Parameters: reference to int (to store received position)
     // Returns: bool (success/failure)
-    bool NetworkManager::recieveMove(int &receivedPos){
+bool NetworkManager::recieveMove(int &receivedPos){
         //TODO
-    }
+}
 
 // Utility function to check connection status
 bool NetworkManager::isConnected(){
