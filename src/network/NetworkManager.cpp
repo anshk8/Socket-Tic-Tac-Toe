@@ -27,7 +27,7 @@ NetworkManager::~NetworkManager(){
 
 //Source https://www.geeksforgeeks.org/cpp/socket-programming-in-cpp/
 bool NetworkManager::startServer(int port){
-    // Create server socket
+    // Create server socket, SOCK_STREAM TCP, SOCK_DGRAM IS UDP
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         cerr << "Failed to create server socket" << endl;
@@ -59,7 +59,7 @@ bool NetworkManager::startServer(int port){
     return true;
 }
 
-bool NetworkManager::acepetConnection(){
+bool NetworkManager::accepetConnection(){
     // Make sure we're running as a server
     if (!isServer || serverSocket == -1) {
         cerr << "Not running as server or server not started" << endl;
@@ -88,7 +88,7 @@ bool NetworkManager::acepetConnection(){
 }
 
 bool NetworkManager::connectToServer(string ip, int port){
-    // Create client socket
+    // Create client socket, SOCK_STREAM IS TCP, SOCK_DGRAM UDP
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (clientSocket == -1) {
         cerr << "Failed to create client socket" << endl;
@@ -119,15 +119,67 @@ bool NetworkManager::connectToServer(string ip, int port){
 
 
   // Communication functions 
-bool NetworkManager:: sendBoardMove(int pos){
-        //TODO
+bool NetworkManager::sendBoardMove(int pos){
+    // Check if we're connected, server can't send to empty client
+    if (!connected || clientSocket == -1) {
+        cerr << "Not connected, cannot send move" << endl;
+        return false;
+    }
+
+    // Send the position as an integer (4 bytes)
+    // Use send() to transmit data over the socket
+    // 0 at end is FLAGS, no special flags its a normal send
+    ssize_t bytesSent = send(clientSocket, &pos, sizeof(pos), 0);
+    
+    if (bytesSent < 0) {
+        cerr << "Failed to send move" << endl;
+        return false;
+    }
+
+    if (bytesSent != sizeof(pos)) {
+        cerr << "Incomplete send: only sent " << bytesSent << " bytes" << endl;
+        return false;
+    }
+
+    cout << "Sent move: position " << pos << endl;
+    return true;
 }
     
     // TODO: Create a function to receive a move
     // Parameters: reference to int (to store received position)
     // Returns: bool (success/failure)
 bool NetworkManager::recieveMove(int &receivedPos){
-        //TODO
+
+    if (!connected || clientSocket == -1) {
+        cout << "Not Connected" << endl;
+        return false;
+    }
+
+    //Recieve position
+    ssize_t bytesReceived = recv(clientSocket, &receivedPos, sizeof(receivedPos), 0);
+    
+
+    if (bytesReceived < 0) {
+        cerr << "Failed to recieve move" << endl;
+        return false;
+    }
+
+    // Check if connection was closed
+    if (bytesReceived == 0) {
+        cerr << "Connection closed by other player" << endl;
+        connected = false;
+        return false;
+    }
+
+    // Check for incomplete receive
+    if (bytesReceived != sizeof(receivedPos)) {
+        cerr << "Incomplete receive: only got " << bytesReceived << " bytes" << endl;
+        return false;
+    }
+    
+    
+    cout << "Receieved move: position " << receivedPos << endl;
+    return true;
 }
 
 // Utility function to check connection status

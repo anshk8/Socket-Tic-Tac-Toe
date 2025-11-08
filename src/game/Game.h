@@ -27,6 +27,11 @@ public:
     
     // Get current player
     Player& getCurrentPlayer();
+
+    Board& getBoard();
+    
+    // Switch to the other player
+    void switchPlayer();
 };
 
 #endif // GAME_H

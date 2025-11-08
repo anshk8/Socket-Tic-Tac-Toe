@@ -37,7 +37,7 @@ public:
     bool startServer(int port);
     
     // Function to accept incoming connection
-    bool acepetConnection();
+    bool accepetConnection();
     
     // Client functions
     //Function to connect to server
