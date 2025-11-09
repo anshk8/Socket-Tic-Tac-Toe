@@ -12,7 +12,7 @@ Board::Board() {
 // Reset board to show position numbers
 void Board::reset() {
     for (int i = 0; i < 9; i++) {
-        cells[i] = '1' + i;  // '1', '2', '3', ..., '9'
+        cells[i] = '0' + i;  // Convert to character '0'-'8'
     }
 }
 
